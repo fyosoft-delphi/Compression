@@ -1,0 +1,15 @@
+In my tests I use different files as samples. These are:
+
+1. Wiki8 : a well-known file of size 100 MB (100000000 bytes)
+
+2. MyMedicine.exe: a program of mine. 58 MB (58720195 bytes)
+
+3. combined calgary corpus files by using winrar store function. 3 MB (3143185 bytes)
+
+4. A log file of my compression algorithm with long repetitions. 15 MB (15480545 bytes)
+
+5. Book1 : a well-known calgary corpus text file. 768 KB (768771 bytes)
+
+6. pascal source file of lhsix compression algorithm. 44 KB (44226 bytes)
+
+7. combined Silesia corpus files by using winrar store function. 206 MB (211940083 bytes)
