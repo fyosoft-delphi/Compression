@@ -1,3 +1,5 @@
+performance of LZPGT compression with different hash functions. Note that LZPGT used as preprocesseor of main compressor with a rangecoder and a ByteQ model.
+
      LZPGT_ADAPTIVE_BLOCK = 2048;
      LZPGT_ADAPTIVE_RATIO = 0.63;
      LZPGT_ADAPTIVE_DECAY = 1;
@@ -505,4 +507,5 @@ Sh1xDualRC-ByteQ      XSxRC15-ByteQ16(1,1,1)               1051335    3143185  %
 Sh1xDualRC-ByteQ      XSxRC15-ByteQ16(1,1,1)                516722   15480545  % 96,66  0,42691  0,30265  OK   OK    OK / OK   9512353  % 94,78
 Sh1xDualRC-ByteQ      XSxRC15-ByteQ16(1,1,1)                283229     768771  % 63,16  0,16891  0,15248  OK   OK    OK / OK    435043  % 61,82
 Sh1xDualRC-ByteQ      XSxRC15-ByteQ16(1,1,1)                 11127      44226  % 74,84  0,11893  0,11075  OK   OK    OK / OK     26990  % 74,84
+
 
