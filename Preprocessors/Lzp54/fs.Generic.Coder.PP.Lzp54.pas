@@ -412,12 +412,12 @@ function LzpDecodePtr(InData, OutData: PByte; InLength: Cardinal; HashBitSize, M
        if HashTable5[HashIndex5] <> nil then
          PastPointer := HashTable5[HashIndex5]
        else PastPointer := HashTable4[HashIndex4];
-       // Hash tablolarýný güncelle
+       // Hash tablolarÃ½nÃ½ gÃ¼ncelle
        HashTable5[HashIndex5] := OutPtr;
        HashTable4[HashIndex4] := OutPtr;
        if PastPointer <> nil then
        begin
-         CommonLength := GetLengthPtr(InData); // isteðe göre deðiþtirilebilir
+         CommonLength := GetLengthPtr(InData); // isteÃ°e gÃ¶re deÃ°iÃ¾tirilebilir
          if CommonLength < 256 then
          begin
            OutPtr^ := Byte(CommonLength);
@@ -601,7 +601,7 @@ function LzpDecode(InData, OutData: PByte; InLength: Cardinal): Cardinal;
      for i := 0 to HTSIZE5 - 1 do
        HashTable5[i] := nil;
      OutLength := 0;
-     for i := 0 to 4 do // Ýlk 5 byte'ý kopyala
+     for i := 0 to 4 do // Ãlk 5 byte'Ã½ kopyala
        OutData[i] := InData[i];
      Inc(OutLength, 5);
      BufPtr := 5;
@@ -661,7 +661,7 @@ function LzpDecode(InData, OutData: PByte; InLength: Cardinal): Cardinal;
      for i := 0 to HTSIZE5 - 1 do
        HashTable5[i] := nil;
      OutLength := 0;
-     for i := 0 to 4 do // Ýlk 5 byte'ý kopyala
+     for i := 0 to 4 do // Ãlk 5 byte'Ã½ kopyala
        OutData[i] := InData[i];
      Inc(OutLength, 5);
      BufPtr := 5;
