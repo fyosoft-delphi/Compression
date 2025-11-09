@@ -1,3 +1,5 @@
+performance of LZPGT compression with different hash functions. Note that no entropy coder or main model compression active (Null coder-nullmodel case) 
+
 
 ContextBuffer := (RotateLeft32(ContextBuffer, 7) xor (CurByte * 131)) and $7FFFFFF;
 
@@ -292,4 +294,5 @@ NullCoder-NullM       XNull-Null                           1823435    3143185  %
 NullCoder-NullM       XNull-Null                           3732185   15480545  % 75,89  0,23238  0,25662  OK   OK    OK / OK   9512353  % 72,15
 NullCoder-NullM       XNull-Null                            570317     768771  % 25,81  0,02629  0,02120  OK   OK    OK / OK    435043  % 20,12
 NullCoder-NullM       XNull-Null                             23175      44226  % 47,60  0,00571  0,00433  OK   OK    OK / OK     26990  % 47,60
+
 
