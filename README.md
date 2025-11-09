@@ -1,8 +1,16 @@
-This is a long run journey for me (from 1990 ...)
+    This is a long run journey for me (from 1990 ...) as a hobbiest programmer.
 
-And compression one of the my first interests.
+    And compression one of the my first interests.
 
-Although many algorithms (will be published here) converted-written in pascal many years ago (Turbo pascal 3.0, 5.5, Delphi 3.1, Delphi 5 times), they are redesigned-rewritten-reconvert and for ethical reasons as much as possible original sources will be given.
+    Although many algorithms (will be published here) converted-written in pascal many years ago (Turbo pascal 3.0, 5.5, Delphi 3.1, Delphi 5 times), 
+they are redesigned-rewritten-reconverted and for ethical reasons as much as possible original sources/credits will be given. 
+
+    I must mention here that I've never wrote a program for ticari purposes. I've never try to make money through programming.
+Hence these programs never used in commercial programs. And also never used in freely distributed programs (except lhsix).
+Therefore I am confident that I never broke any law. And I expect the same from the audiences that will use algorithms published (or will publish) here.
+Please check the original sources (links are given in the beginning of all algorithms/objects/files) for copyright notices and restrictions.
+
+    After a decade long break, returned to delphi (RAD studio now) as a retired citizen.
 When examining generic structure I realized that my compression algorithm have lots of redundant codes, may be a generic coder simplifies them. And I wrote a generic coder. 
 To be able to integrate my existing works, I must redisned them. For this reason created three abstract classes: TAbstractCoder, TAbstractManager & TAbstractModel.,
 Generic Coders main function is carrying out preprocessing functions: E89, ST, BWT, MTF, LZP etc. and combining Coder and Model. 
