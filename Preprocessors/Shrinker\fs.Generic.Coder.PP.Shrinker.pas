@@ -368,7 +368,7 @@ function ShrinkerEncodeBlockBased(const ASource: TMemoryStream; HashBitSize: Byt
            CurrentBlockSize := BlockSize
          else CurrentBlockSize := Remaining;
          // prepare temp buffer
-         TempStm.Size := CurrentBlockSize + 1024;  // Overhead için ekstra
+         TempStm.Size := CurrentBlockSize + 1024;  // Overhead iÃ§in ekstra
          // Encode Block
          EncodedSize := ShrinkerEncodePtr(SourcePtr, PByte(TempStm.Memory), CurrentBlockSize, HashBitSize, 4);
          // Write Block header [encoded_size (3 byte), is_compressed (1 byte)]
