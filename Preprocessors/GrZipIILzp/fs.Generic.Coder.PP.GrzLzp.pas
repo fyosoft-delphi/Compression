@@ -192,7 +192,7 @@ function GrzLzpDecode(Input: PByte; Size: Cardinal; Output: PByte; HashBitSize: 
              if CommonLength > 0 then
              begin
                CommonLength := CommonLength + LZP_MinMatchLen - 1;
-               for var i := 1 to CommonLength do // Byte'larý kopyala
+               for var i := 1 to CommonLength do // Byte'larÃ½ kopyala
                begin
                  Output^ := LastPtr^;
                  Inc(Output);
