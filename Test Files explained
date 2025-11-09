@@ -12,4 +12,4 @@ In my tests I use different files as samples. These are:
 
 6. pascal source file of lhsix compression algorithm. 44 KB (44226 bytes)
 
-7. combined Silesia corpus files by using winrar store function. 206 MB (211940083 bytes) combined files taken from : https://mattmahoney.net/dc/silesia.html
+7. combined Silesia corpus files by using winrar store function. 206 MB (211940083 bytes) combined files taken from the link: https://mattmahoney.net/dc/silesia.html
