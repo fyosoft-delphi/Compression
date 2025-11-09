@@ -27,22 +27,22 @@ procedure FastMTFEncode(AInPtr, AOutPtr: PByte; ASize : NativeInt);
      Index: NativeInt;
      CurrentChar: Byte;
    begin
-     for var i := 0 to 255 do // Alfabeyi ba˛lat (0..255)
+     for var i := 0 to 255 do // Alfabeyi ba√ælat (0..255)
      begin
        FAlphabet[i] := Byte(i);
-       FCharToIndex[i] := i;  // Her karakterin ba˛lang˝Á pozisyonu
+       FCharToIndex[i] := i;  // Her karakterin ba√ælang√Ω√ß pozisyonu
      end;
      Dec(ASize);
      for var i := 0 to ASize do
      begin
        CurrentChar := AInPtr[i];
-       Index := FCharToIndex[CurrentChar]; // Karakterin indeksini dorudan diziden al
-       AOutPtr[i] := Byte(Index); // MTF deerini kaydet
-       if Index > 0 then      // Karakteri listenin ba˛˝na ta˛˝
-       begin // Karakteri ba˛a ta˛˝ (System.Move ile optimize edilmi˛)
-         System.Move(FAlphabet[0], FAlphabet[1], Index);  // Kayd˝rma i˛lemi
+       Index := FCharToIndex[CurrentChar]; // Karakterin indeksini do√∞rudan diziden al
+       AOutPtr[i] := Byte(Index); // MTF de√∞erini kaydet
+       if Index > 0 then      // Karakteri listenin ba√æ√Ωna ta√æ√Ω
+       begin // Karakteri ba√æa ta√æ√Ω (System.Move ile optimize edilmi√æ)
+         System.Move(FAlphabet[0], FAlphabet[1], Index);  // Kayd√Ωrma i√ælemi
          FAlphabet[0] := CurrentChar;
-         for Index := Index downto 1 do // Karakter indekslerini g¸ncelle
+         for Index := Index downto 1 do // Karakter indekslerini g√ºncelle
            FCharToIndex[FAlphabet[Index]] := Index;
          FCharToIndex[CurrentChar] := 0;
        end;
@@ -60,22 +60,22 @@ procedure FastMTFDecode(AInPtr, AOutPtr: PByte; ASize : NativeInt);
      Index: NativeInt;
      CurrentChar: Byte;
    begin
-     for var i := 0 to 255 do // Alfabeyi ba˛lat (0..255)
+     for var i := 0 to 255 do // Alfabeyi ba√ælat (0..255)
      begin
        FAlphabet[i] := Byte(i);
-       FCharToIndex[i] := i;  // Her karakterin ba˛lang˝Á pozisyonu
+       FCharToIndex[i] := i;  // Her karakterin ba√ælang√Ω√ß pozisyonu
      end;
      Dec(ASize);
      for var i := 0 to ASize do
      begin
-       Index := AInPtr[i]; // MTF deerini al
+       Index := AInPtr[i]; // MTF de√∞erini al
        CurrentChar := FAlphabet[Index];    // Alfabe listesindeki karakteri bul
        AOutPtr[i] := CurrentChar; // Orijinal karakteri kaydet
-       if Index > 0 then // Karakteri listenin ba˛˝na ta˛˝
-       begin // Karakteri ba˛a ta˛˝ (System.Move ile optimize edilmi˛)
-         System.Move(FAlphabet[0], FAlphabet[1], Index);  // Kayd˝rma i˛lemi
+       if Index > 0 then // Karakteri listenin ba√æ√Ωna ta√æ√Ω
+       begin // Karakteri ba√æa ta√æ√Ω (System.Move ile optimize edilmi√æ)
+         System.Move(FAlphabet[0], FAlphabet[1], Index);  // Kayd√Ωrma i√ælemi
          FAlphabet[0] := CurrentChar;
-         for Index := Index downto 1 do // Karakter indekslerini g¸ncelle
+         for Index := Index downto 1 do // Karakter indekslerini g√ºncelle
            FCharToIndex[FAlphabet[Index]] := Index;
          FCharToIndex[CurrentChar] := 0;
        end;
