@@ -22,7 +22,7 @@ uses System.Classes, System.SysUtils
 // Finally, I found the original link of bolt.zip:
 //       https://encode.su/attachment.php?attachmentid=10617&d=1687282734
 //
-// 2025.10.08 First running copy.
+// 2025.11.08 First running copy.
 //     - Updated to current Pascal/Delphi conventions.
 //     - Numerous range checking and integer overflow errors existed in the
 //   original code. They are bypassed by turning these checks off using compiler
@@ -48,29 +48,30 @@ uses System.Classes, System.SysUtils
 //   variable. In RLE mode, RLE data size is 3 bytes: 12-bit count in the higher
 //   12 bits of LzWord, and the repeating character follows the LzWord. In the
 //   original format, the RLE block size was 4.
-// 2025.10.08 To speed up the process further, in GetMatch and in Decompress do-
+// 2025.11.08 To speed up the process further, in GetMatch and in Decompress do-
 //   loops, variables were converted to PByte.
 // TO DO: Source and destination may also be converted to PByte.
-// 2025.10.08 Static MinMatchLen, MaxMatchLen, MinRLELen, and MaxRLELen constants
+// 2025.11.08 Static MinMatchLen, MaxMatchLen, MinRLELen, and MaxRLELen constants
 //   converted to settings variables that can be changed at runtime. All of these
 //   variables depend on MinMatchLength, and this flag is saved to the destination
 //   file as the first byte, and later loaded during decoding. If this byte is
 //   zero, the decoder knows that the file is not compressed, just copied.
 //   This represents a structural change (previously, there were two flags
 //   corresponding to this behavior).
-// 2025.10.08 Self-compressing and decompressing stream functions added.
-// 2025.10.09 In the original algorithm, the destination buffer boundary was
+// 2025.11.08 Self-compressing and decompressing stream functions added.
+// 2025.11.09 In the original algorithm, the destination buffer boundary was
 //   checked against the source size (assuming both have at least the same space).
 //   When the original data size is very small (e.g., 5 bytes), due to at least
 //   3 bytes of header, only 2 bytes of source data are processed and the rest
 //   skipped, resulting in data loss. To overcome this shortcoming, the
 //   destination size was added as a parameter.
-// 2025.10.09 Test showed that using this as a preprocessing step is not a good
-//   idea. MinMatchLen of 14–18 gave superior results but can't exceed the ~62%
+// 2025.11.09 Test showed that using this as a preprocessing step is not a good
+//   idea. MinMatchLen of 14â€“18 gave superior results but can't exceed the ~62%
 //   barrier on wiki8. The complicated structure of the resulting encoded file
 //   (2-byte commands + RLE blocks + LZ blocks + literals combined randomly) may
 //   prevent models from learning the patterns in the file and degrade the
 //   compression ratio.
+// 2025.11.09 -First upload to github account.
 //==============================================================================
 Function LzrwKhEncode(Const Source, Dest: PByte; Const SourceSize, DestSize: Cardinal; AMinMatch : byte): Cardinal; overload;
 Function LzrwKhDecode(Const Source, Dest: PByte; Const SourceSize, DestSize: Cardinal): Cardinal; overload;
@@ -507,5 +508,6 @@ initialization
 //  TestLzrw1KhStm;
 //  TestLzrw1KhPtr;
 end.
+
 
 
