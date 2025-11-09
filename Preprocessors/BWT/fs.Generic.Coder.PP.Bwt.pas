@@ -6,9 +6,8 @@ unit fs.Generic.Coder.PP.Bwt;
 
 interface
 
-uses System.Classes, System.SysUtils, System.Math,
-     System.Generics.Defaults, System.Generics.Collections,
-     fs.Core.MemStream, fs.Core.LogHelper;
+uses System.Classes, System.SysUtils, System.Math
+     {$IFDEF BWT_DEBUG}, fs.Core.LogHelper{$ENDIF};
 
 Const
      BWT_MAX_BLOCKSIZE     = 1 shl 24;
@@ -57,6 +56,8 @@ Const
 Function EncodedBwtSize(ASourceSize, ABlockSize : Cardinal) : Cardinal; inline;
 Function BwtEncodeData(const input, AEncoded: PByte; const ADataSize : Cardinal) : Cardinal;
 procedure BwtDecodeData(const AEncoded, ADecoded: PByte; const ADataSize, Index : Cardinal);
+//Function BwtEncodeData2(const input, AEncoded: PByte; const ADataSize : Cardinal) : Cardinal;
+//procedure BwtDecodeData2(const AEncoded, ADecoded: PByte; const ADataSize, Index: Cardinal);
 
 procedure BwtEncodeBlock(const input, AEncoded: PByte; const InputSize : Cardinal; out AWritten: Cardinal); overload;
 procedure BwtDecodeBlock(const AEncoded, ADecoded: PByte; InputSize : Cardinal; out AWritten : cardinal); overload;
@@ -108,7 +109,7 @@ procedure BwtEncode(const ASource : TMemoryStream; const ABlockMultiplier : word
      SourceSize, DestinationSize : Cardinal;
      AProcessed, AWritten, AReaded : Cardinal;
      ABlockSize {$IFDEF BWT_DEBUG}, BlockNumber{$ENDIF} : Cardinal;
-     ADestination : TExtMemStream;
+     ADestination : TMemoryStream;
    begin
      SourceSize := ASource.Size;
      {$IFDEF BWT_DEBUG}
@@ -117,7 +118,7 @@ procedure BwtEncode(const ASource : TMemoryStream; const ABlockMultiplier : word
      BlockNumber := 0;
      {$ENDIF}
      Assert(ABlockMultiplier <= MAX_BWT_MULTIPLIER, 'BWT: block size out of limit');
-     ADestination := TExtMemStream.Create;
+     ADestination := TMemoryStream.Create;
      try
        ABlockSize := System.Math.Min(SourceSize, ABlockMultiplier * BWT_BLOCK_GRANULARITY); // calculate blocksize
        ADestination.Size := EncodedBwtSize(SourceSize, ABlockSize) + BWT_MEMORY_SAFETY_BUF; // calculate encoded data size & reserve memory
@@ -163,7 +164,7 @@ procedure BwtDecode(const ASource : TMemoryStream);
      SourceSize, DestinationSize : Cardinal;
      ABlockSize {$IFDEF BWT_DEBUG}, ABlockMultiplier, BlockNumber{$ENDIF} : Cardinal;
      AProcessed, AWritten, AReaded : Cardinal;
-     ADestination : TExtMemStream;
+     ADestination : TMemoryStream;
    begin
      SourceSize := ASource.Size;
      {$IFDEF BWT_DEBUG}
@@ -171,7 +172,7 @@ procedure BwtDecode(const ASource : TMemoryStream);
      TLogHelper.WriteLN(Format('BWT Decode started. FileSize: %u', [SourceSize]));
      BlockNumber := 0;
      {$ENDIF}
-     ADestination := TExtMemStream.Create;
+     ADestination := TMemoryStream.Create;
      try
        DestinationSize := 0; // initialize destination data size
        AProcessed := 0; // initialize AProcessed data size
@@ -270,8 +271,8 @@ function BwtEncodeData(const input, AEncoded: PByte; const ADataSize : Cardinal)
      if ADataSize = 0 then
        Exit;
      SetLength(perm, ADataSize);
-     if ADataSize <= 64 then // Küçük bloklar için farklý algoritma
-     begin // Küçük veriler için insertion sort daha hýzlý
+     if ADataSize <= 64 then // Küçük bloklar için farklı algoritma
+     begin // Küçük veriler için insertion sort daha hızlı
        for i := 0 to ADataSize - 1 do
          perm[i] := i;
        for i := 1 to ADataSize - 1 do // Insertion sort
@@ -357,7 +358,7 @@ procedure BwtDecodeData(const AEncoded, ADecoded: PByte; const ADataSize, Index:
    begin
      if ADataSize = 0 then
        Exit;
-     // Count occurrences - daha hýzlý pointer eriþimi
+     // Count occurrences - daha hızlı pointer erişimi
      FillChar(charInfo, SizeOf(charInfo), 0);
      for j := 0 to ADataSize - 1 do
        Inc(charInfo[AEncoded[j]]);
@@ -431,6 +432,3 @@ Procedure TestBwtStmS;
 initialization
 //TestBwtStmS;
 end.
-
-
-
