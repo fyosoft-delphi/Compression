@@ -8,7 +8,7 @@ interface
 
 uses System.Classes, System.SysUtils, System.Math,
      System.Generics.Defaults, System.Generics.Collections,
-     fs.Core.MemStream, fs.Core.LogHelper, fs.Core.GenericSort;
+     fs.Core.MemStream, fs.Core.LogHelper;
 
 Const
      BWT_MAX_BLOCKSIZE     = 1 shl 24;
@@ -21,7 +21,7 @@ Const
 //==============================================================================
 //                  BWT Encode & BWT Decode functions
 // Main BWT transformation algorithm is taken from the link:
-//         https://rosettacode.org/wiki/Burrows–Wheeler_transform#Pascal
+//         https://rosettacode.org/wiki/Burrowsâ€“Wheeler_transform#Pascal
 // -First running copy date unknown (not saved).
 // -Original datasize saving is removed since no need to know original data size.
 // -Instead BlockSize, for each block selected BlockIndex is saved to destination.
@@ -57,8 +57,6 @@ Const
 Function EncodedBwtSize(ASourceSize, ABlockSize : Cardinal) : Cardinal; inline;
 Function BwtEncodeData(const input, AEncoded: PByte; const ADataSize : Cardinal) : Cardinal;
 procedure BwtDecodeData(const AEncoded, ADecoded: PByte; const ADataSize, Index : Cardinal);
-//Function BwtEncodeData2(const input, AEncoded: PByte; const ADataSize : Cardinal) : Cardinal;
-//procedure BwtDecodeData2(const AEncoded, ADecoded: PByte; const ADataSize, Index: Cardinal);
 
 procedure BwtEncodeBlock(const input, AEncoded: PByte; const InputSize : Cardinal; out AWritten: Cardinal); overload;
 procedure BwtDecodeBlock(const AEncoded, ADecoded: PByte; InputSize : Cardinal; out AWritten : cardinal); overload;
@@ -272,8 +270,8 @@ function BwtEncodeData(const input, AEncoded: PByte; const ADataSize : Cardinal)
      if ADataSize = 0 then
        Exit;
      SetLength(perm, ADataSize);
-     if ADataSize <= 64 then // Küçük bloklar için farklý algoritma
-     begin // Küçük veriler için insertion sort daha hýzlý
+     if ADataSize <= 64 then // KÃ¼Ã§Ã¼k bloklar iÃ§in farklÃ½ algoritma
+     begin // KÃ¼Ã§Ã¼k veriler iÃ§in insertion sort daha hÃ½zlÃ½
        for i := 0 to ADataSize - 1 do
          perm[i] := i;
        for i := 1 to ADataSize - 1 do // Insertion sort
@@ -305,7 +303,7 @@ function BwtEncodeData(const input, AEncoded: PByte; const ADataSize : Cardinal)
        end;
      end
      else
-     begin // Büyük veriler için Shell Sort
+     begin // BÃ¼yÃ¼k veriler iÃ§in Shell Sort
        for j := 0 to ADataSize - 1 do
          perm[j] := j;
        incr := 1;
@@ -351,45 +349,6 @@ function BwtEncodeData(const input, AEncoded: PByte; const ADataSize : Cardinal)
      end;
    end;
 
-function BwtEncodeData2(const input, AEncoded: PByte; const ADataSize : Cardinal) : Cardinal;
- var Helper: TMergeSortHelper<Integer>;
-     Adapter: TCyclicBwtCompareAdapter;
-     Indices: TArray<Integer>;
-     I, J : integer;
-   begin
-     Result := 0;
-     if (ADataSize <= 0) then
-       Exit;
-     SetLength(Indices, ADataSize);            // 1. create indexes
-     for I := 0 to ADataSize - 1 do
-       Indices[I] := I;
-     Adapter := TCyclicBwtCompareAdapter.Create(Input, ADataSize);
-     try
-       Helper.Sort(Indices, Adapter.Compare); // 2. Sort indices
-       for I := 0 to ADataSize - 1 do      // 3. find start index
-         if Indices[I] = 0 then
-         begin
-           Result := I;
-           Break;
-         end;
-       for I := 0 to ADataSize - 1 do      // 5. copy sorted data to temp buffer
-       begin
-         J := Indices[I];
-         AEncoded[I] := Input[J];
-       end;
-     finally
-       Adapter.Free;
-     end;
-   end;
-
-procedure BwtDecodeData2(const AEncoded, ADecoded: PByte; const ADataSize, Index: Cardinal);
- var OriginalData: TArray<Byte>;
-   begin
-     SetLength(OriginalData, ADataSize);
-     TGenericSorter.InverseBWT(AEncoded, ADataSize, Index, OriginalData);
-     Move(OriginalData[0], ADecoded^, ADataSize);
-   end;
-
 procedure BwtDecodeData(const AEncoded, ADecoded: PByte; const ADataSize, Index: Cardinal);
  var charInfo: array [byte] of Cardinal;
      perm: TArray<Cardinal>;
@@ -398,7 +357,7 @@ procedure BwtDecodeData(const AEncoded, ADecoded: PByte; const ADataSize, Index:
    begin
      if ADataSize = 0 then
        Exit;
-     // Count occurrences - daha hýzlý pointer eriþimi
+     // Count occurrences - daha hÃ½zlÃ½ pointer eriÃ¾imi
      FillChar(charInfo, SizeOf(charInfo), 0);
      for j := 0 to ADataSize - 1 do
        Inc(charInfo[AEncoded[j]]);
@@ -472,5 +431,6 @@ Procedure TestBwtStmS;
 initialization
 //TestBwtStmS;
 end.
+
 
 
