@@ -1,3 +1,7 @@
+effect of hash function calculation in compression ratio with the same encoding state with respect to different kind files.
+
+This is the wiki8
+
 Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
 --------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
 ((ContextBuffer shl 5) and $FFFFFFF + CurByte)            55006714  100000000  % 44,99  2,55324  2,28558  OK   OK    OK / OK  63501754  % 33,93
@@ -14,6 +18,7 @@ Algorithm             Level                               Zip Size   Ori Size  C
 (RotateLeft32(ContextBuffer,7) xor CurByte) and $7FFFFFF  64819761  100000000  % 35,18  2,59778  2,14122  OK   OK    OK / OK  63501754  % 26,90
 ((ContextBuffer shl 4) or CurByte)                        69674277  100000000  % 30,33  2,02112  1,74262  OK   OK    OK / OK  63501754  % 26,11
 
+this is 58 MB exe file
 
 ((ContextBuffer shl 4) or CurByte)                        26578408   58720195  % 54,74  1,19879  1,16620  OK   OK    OK / OK  43596477  % 52,90
 ((ContextBuffer shl 4) and $FFFFFFF + CurByte)            26822117   58720195  % 54,32  1,32110  1,36923  OK   OK    OK / OK  43596477  % 51,65
@@ -29,6 +34,7 @@ Algorithm             Level                               Zip Size   Ori Size  C
 ((ContextBuffer shl 6) xor CurByte) and $3FFFFFF          27942389   58720195  % 52,41  1,20608  1,15842  OK   OK    OK / OK  43596477  % 50,48
 ((ContextBuffer shl 8) or CurByte)                        28721659   58720195  % 51,09  1,17903  1,15677  OK   OK    OK / OK  43596477  % 49,97
 
+this is the calgary corpus file combined
 
 ((ContextBuffer shl 6) xor CurByte) and $3FFFFFF           1726559    3143185  % 45,07  0,08079  0,06368  OK   OK    OK / OK   2108002  % 38,96
 ((ContextBuffer shl 5) and $FFFFFFF + CurByte)             1735287    3143185  % 44,79  0,07478  0,06705  OK   OK    OK / OK   2108002  % 36,26
@@ -44,6 +50,7 @@ Algorithm             Level                               Zip Size   Ori Size  C
 ((ContextBuffer shl 4) or CurByte)                         2003103    3143185  % 36,27  0,06709  0,05912  OK   OK    OK / OK   2108002  % 30,90
 ((C shl 3) or (C shr 29) xor (CByte * 131)) and $7FFFFFF   2051978    3143185  % 34,72  0,07474  0,07428  OK   OK    OK / OK   2108002  % 22,78
 
+this is the log file of 15 MB size with long repetitions
 
 ((CtxBuf shl 7) or (CtxtBuf shr 25)) xor CurByte           3598364   15480545  % 76,76  0,21516  0,23459  OK   OK    OK / OK   9512353  % 75,36
 (((C shl 7) or (C shr 25)) xor CurByte) and $7FFFFFF       3598364   15480545  % 76,76  0,21512  0,23092  OK   OK    OK / OK   9512353  % 75,36
@@ -60,6 +67,7 @@ Algorithm             Level                               Zip Size   Ori Size  C
 ((ContextBuffer shl 8) or CurByte)                         5357335   15480545  % 65,39  0,22668  0,22736  OK   OK    OK / OK   9512353  % 64,97
 
 
+book1 file
 
 ((ContextBuffer shl 6) xor CurByte) and $3FFFFFF            528861     768771  % 31,21  0,02224  0,01854  OK   OK    OK / OK    435043  % 28,83
 ((ContextBuffer shl 5) and $FFFFFFF + CurByte)              535055     768771  % 30,40  0,02357  0,01962  OK   OK    OK / OK    435043  % 26,41
@@ -75,6 +83,7 @@ Algorithm             Level                               Zip Size   Ori Size  C
 ((ContextBuffer shl 4) or CurByte)                          638260     768771  % 16,98  0,01976  0,01717  OK   OK    OK / OK    435043  % 15,07
 ((C shl 3) or (C shr 29) xor (CByte * 131)) and $7FFFFFF    658774     768771  % 14,31  0,02561  0,02306  OK   OK    OK / OK    435043   % 7,63
 
+pascal source file
 
 ((ContextBuffer shl 8) or CurByte)                           20062      44226  % 54,64  0,00572  0,00432  OK   OK    OK / OK     26990  % 54,64
 ((ContextBuffer shl 6) xor CurByte) and $3FFFFFF             20869      44226  % 52,81  0,00575  0,00535  OK   OK    OK / OK     26990  % 52,81
@@ -89,3 +98,4 @@ Algorithm             Level                               Zip Size   Ori Size  C
 (((C shl 7) or (C shr 25)) xor CurByte) and $7FFFFFF         23512      44226  % 46,84  0,00746  0,00463  OK   OK    OK / OK     26990  % 46,84
 (RotateLeft32(ContextBuffer,7) xor CurByte) and $7FFFFFF     23512      44226  % 46,84  0,00595  0,00458  OK   OK    OK / OK     26990  % 46,84
 ((C shl 3) or (C shr 29) xor (CByte * 131)) and $7FFFFFF     25559      44226  % 42,21  0,00461  0,00459  OK   OK    OK / OK     26990  % 42,21
+
