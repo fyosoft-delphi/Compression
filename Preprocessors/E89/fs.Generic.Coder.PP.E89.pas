@@ -21,7 +21,7 @@ NullCoder-Lazy3 E89   XNull-L3[3](L1,1)(O10,3)(i2,1)D1    20120124   58720195  %
 //   http://www.ezcodesample.com/binarycoder/BALZnoROLZ.txt
 // You can use ExeTransform function, to encode (AMode=1) and to decode (AMode=0)
 // ExeTransform splitted into Encode-Decode counterparts for easy usage.
-// 2025.10.25 When file too small error occured. Resolved by adding filesize
+// 2025.10.25 When file too small, an error occured. Resolved by adding filesize
 //   control to check if it is greater than 25.
 //==============================================================================
 procedure ExeTransform(const AMode: Integer; const AData: PByte; const ASize: NativeInt);
@@ -219,4 +219,5 @@ function E89Decode(const src: PByte; const sz: UInt64): Integer;
 
 
 end.
+
 
