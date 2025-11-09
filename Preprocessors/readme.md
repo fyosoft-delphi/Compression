@@ -1,11 +1,80 @@
 Preprocessing functions/algorithms lies in this folder (although you may not see some of them as a preprocessor).
 
+Test results are given to give an idea about time spent on each process.
+
 1. BWT : Famous Burrows-Wheeler transform related algorithms.
-      a. BWT : 
-      b. czBWT : a fast but partial sorting algorithm.
-2. E89 : Mostly known as exetransform. if applied, compression ratio increased on exe files ~1-2%
-3. ST : a BWT like transform known as Schindler's Transform. Here only ST1 and ST2 implemented. ST3 conversion from LibBsc left unfinished. If I completed some day, it will be added here.
-4. MTF: Famous Move To Front algorithm. I got two version. Only the faster one uploaded here.
+
+      a. BWT :
+   
+128K BlockSize used
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          21194495  211940083   % 0,00  270,380  2,82899  OK   OK    OK / OK  16854728  % -0,01
+NullCoder-NullM       XNull-Null                          10000231  100000000   % 0,00  48,0226  1,27054  OK   OK    OK / OK  63501754  % -0,01
+NullCoder-NullM       XNull-Null                          58721562   58720195   % 0,00  64,4360  0,72601  OK   OK    OK / OK  43596477  % -0,01
+NullCoder-NullM       XNull-Null                           3143280    3143185   % 0,00  25,4692  0,04006  OK   OK    OK / OK   2108002  % -0,01
+NullCoder-NullM       XNull-Null                          15480925   15480545   % 0,00  23,8511  0,19726  OK   OK    OK / OK   9512353  % -0,01
+NullCoder-NullM       XNull-Null                            768812     768771  % -0,01  0,35542  0,01163  OK   OK    OK / OK    435043  % -0,01
+NullCoder-NullM       XNull-Null                             44252      44226  % -0,06  0,02535  0,00066  OK   OK    OK / OK     26990  % -0,06
+
+
+      b. czBWT : a fast but partial sorting algorithm. (in the following tests E89 active)
+Default BlockSize = 0 selected for non-binary files. That means file is  encode as a single block.
+This complicates the search algorithm and slows down the process.
+For binary files 64-512K-1MB choosen automatically by file size.
+In general, for binary files 512K blocksize is best. For huge text files 16 MB block size is enough.
+
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          21194174  211940083   % 0,00  24,1965  17,1362  OK   OK    OK / OK  16854728  % -0,01
+NullCoder-NullM       XNull-Null                          10000080  100000000   % 0,00  11,4571  7,03099  OK   OK    OK / OK  63501754  % -0,01
+NullCoder-NullM       XNull-Null                          58720676   58720195   % 0,00  6,80812  4,81185  OK   OK    OK / OK  43596477  % -0,01
+NullCoder-NullM       XNull-Null                           3143266    3143185   % 0,00  0,48584  0,31959  OK   OK    OK / OK   2108002  % -0,01
+NullCoder-NullM       XNull-Null                          15480586   15480545   % 0,00  1,46810  0,38652  OK   OK    OK / OK   9512353  % -0,01
+NullCoder-NullM       XNull-Null                            768812     768771  % -0,01  0,09935  0,05971  OK   OK    OK / OK    435043  % -0,01
+NullCoder-NullM       XNull-Null                             44267      44226  % -0,09  0,06266  0,04626  OK   OK    OK / OK     26990  % -0,09
+
+   
+3. E89 : Mostly known as exetransform. if applied, compression ratio increased on exe files up to ~1-2%
+
+
+4. ST : a BWT like transform known as Schindler's Transform. Here only ST1 and ST2 implemented. ST3 conversion from LibBsc left unfinished. If I completed some day, it will be added here.
+
+ST1
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          21194010  211940083   % 0,00  1,42252  1,99879  OK   OK    OK / OK  16854728  % -0,01
+NullCoder-NullM       XNull-Null                          10000001  100000000   % 0,00  0,58761  0,85681  OK   OK    OK / OK  63501754  % -0,01
+NullCoder-NullM       XNull-Null                          58720213   58720195   % 0,00  0,39383  0,55848  OK   OK    OK / OK  43596477  % -0,01
+NullCoder-NullM       XNull-Null                           3143203    3143185   % 0,00  0,02473  0,02691  OK   OK    OK / OK   2108002  % -0,01
+NullCoder-NullM       XNull-Null                          15480563   15480545   % 0,00  0,14488  0,13948  OK   OK    OK / OK   9512353  % -0,01
+NullCoder-NullM       XNull-Null                            768789     768771   % 0,00  0,00943  0,00777  OK   OK    OK / OK    435043  % -0,01
+NullCoder-NullM       XNull-Null                             44244      44226  % -0,04  0,00143  0,00056  OK   OK    OK / OK     26990  % -0,04
+
+ST2
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          21194010  211940083   % 0,00  1,83887  4,17603  OK   OK    OK / OK  16854728  % -0,01
+NullCoder-NullM       XNull-Null                          10000001  100000000   % 0,00  0,70999  1,41847  OK   OK    OK / OK  63501754  % -0,01
+NullCoder-NullM       XNull-Null                          58720214   58720195   % 0,00  0,52064  1,12440  OK   OK    OK / OK  43596477  % -0,01
+NullCoder-NullM       XNull-Null                           3143204    3143185   % 0,00  0,03037  0,04141  OK   OK    OK / OK   2108002  % -0,01
+NullCoder-NullM       XNull-Null                          15480564   15480545   % 0,00  0,15933  0,21542  OK   OK    OK / OK   9512353  % -0,01
+NullCoder-NullM       XNull-Null                            768790     768771   % 0,00  0,00864  0,01039  OK   OK    OK / OK    435043  % -0,01
+NullCoder-NullM       XNull-Null                             44245      44226  % -0,04  0,00169  0,00082  OK   OK    OK / OK     26990  % -0,04
+
+
+5. MTF: Famous Move To Front algorithm. I got two version. Only the faster one uploaded here. (do not change files size but some overhead added by Generic Coder)  (in the following tests E89 active)
+
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          21194010  211940083   % 0,00  9,60575  8,12375  OK   OK    OK / OK  16854728  % -0,01
+NullCoder-NullM       XNull-Null                          10000001  100000000   % 0,00  3,25319  2,81373  OK   OK    OK / OK  63501754  % -0,01
+NullCoder-NullM       XNull-Null                          58720212   58720195   % 0,00  2,66089  2,27583  OK   OK    OK / OK  43596477  % -0,01
+NullCoder-NullM       XNull-Null                           3143202    3143185   % 0,00  0,10985  0,08818  OK   OK    OK / OK   2108002  % -0,01
+NullCoder-NullM       XNull-Null                          15480562   15480545   % 0,00  0,55670  0,43435  OK   OK    OK / OK   9512353  % -0,01
+NullCoder-NullM       XNull-Null                            768788     768771   % 0,00  0,02821  0,02065  OK   OK    OK / OK    435043  % -0,01
+NullCoder-NullM       XNull-Null                             44243      44226  % -0,04  0,00293  0,00145  OK   OK    OK / OK     26990  % -0,04
+
 
 5. RLE: Run Length Encoding, if you want you can use it as a preprocessor. (in the following tests E89 active)
 
