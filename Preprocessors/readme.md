@@ -177,3 +177,19 @@ NullCoder-NullM       XNull-Null                           2372221   15480545  %
 NullCoder-NullM       XNull-Null                            462350     768771  % 39,86  0,01286  0,00485  OK   OK    OK / OK    435043  % 39,26
 NullCoder-NullM       XNull-Null                             15397      44226  % 65,19  0,00284  0,00040  OK   OK    OK / OK     26990  % 65,19
 
+12. WFC : Weighted Frequency Count Transformation. It may give better compression ratios over MTF for some file types. (in the following tests E89 active)
+
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          10000001  100000000   % 0,00  239,373  231,569  OK   OK    OK / OK  63501754  % -0,01
+NullCoder-NullM       XNull-Null                          58720212   58720195   % 0,00  141,723  138,317  OK   OK    OK / OK  43596477  % -0,01
+NullCoder-NullM       XNull-Null                           3143202    3143185   % 0,00  7,43302  7,19293  OK   OK    OK / OK   2108002  % -0,01
+NullCoder-NullM       XNull-Null                          15480562   15480545   % 0,00  36,7545  35,5187  OK   OK    OK / OK   9512353  % -0,01
+NullCoder-NullM       XNull-Null                            768788     768771   % 0,00  1,82123  1,75398  OK   OK    OK / OK    435043  % -0,01
+NullCoder-NullM       XNull-Null                             44243      44226  % -0,04  0,10541  0,10158  OK   OK    OK / OK     26990  % -0,04
+
+
+    
+14. 
+
+    
