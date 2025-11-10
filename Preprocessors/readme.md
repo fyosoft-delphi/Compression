@@ -76,7 +76,20 @@ NullCoder-NullM       XNull-Null                            768788     768771   
 NullCoder-NullM       XNull-Null                             44243      44226  % -0,04  0,00293  0,00145  OK   OK    OK / OK     26990  % -0,04
 
 
-5. RLE: Run Length Encoding, if you want you can use it as a preprocessor. (in the following tests E89 active)
+6. WFC : Weighted Frequency Count Transformation. It may give better compression ratios over MTF for some file types. (in the following tests E89 active)
+
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          10000001  100000000   % 0,00  239,373  231,569  OK   OK    OK / OK  63501754  % -0,01
+NullCoder-NullM       XNull-Null                          58720212   58720195   % 0,00  141,723  138,317  OK   OK    OK / OK  43596477  % -0,01
+NullCoder-NullM       XNull-Null                           3143202    3143185   % 0,00  7,43302  7,19293  OK   OK    OK / OK   2108002  % -0,01
+NullCoder-NullM       XNull-Null                          15480562   15480545   % 0,00  36,7545  35,5187  OK   OK    OK / OK   9512353  % -0,01
+NullCoder-NullM       XNull-Null                            768788     768771   % 0,00  1,82123  1,75398  OK   OK    OK / OK    435043  % -0,01
+NullCoder-NullM       XNull-Null                             44243      44226  % -0,04  0,10541  0,10158  OK   OK    OK / OK     26990  % -0,04
+
+
+
+7. RLE: Run Length Encoding, if you want you can use it as a preprocessor. (in the following tests E89 active)
 
 Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
 --------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
@@ -89,7 +102,7 @@ NullCoder-NullM       XNull-Null                            768671     768771   
 NullCoder-NullM       XNull-Null                             38916      44226  % 12,01  0,00159  0,00048  OK   OK    OK / OK     26990  % 12,01
 
 
-6. Lzp54: Double hash Lz variant. If min match length is choosen wisely, increses compression ratio. (in the following tests E89 active)
+8. Lzp54: Double hash Lz variant. If min match length is choosen wisely, increses compression ratio. (in the following tests E89 active)
 
 MinMatch = 3
 Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
@@ -114,7 +127,7 @@ NullCoder-NullM       XNull-Null                            683298     768771  %
 NullCoder-NullM       XNull-Null                             20975      44226  % 52,57  0,00454  0,00297  OK   OK    OK / OK     26990  % 52,57
 
 
-7. GrZipIILzp: A lzp preprocessing algorithm used in GrZipII. (in the following tests E89 active)
+9. GrZipIILzp: A lzp preprocessing algorithm used in GrZipII. (in the following tests E89 active)
 
 MinMatch=3
 Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
@@ -138,21 +151,45 @@ NullCoder-NullM       XNull-Null                           2448549   15480545  %
 NullCoder-NullM       XNull-Null                            677217     768771  % 11,91  0,02445  0,01431  OK   OK    OK / OK    435043  % 10,86
 NullCoder-NullM       XNull-Null                             21273      44226  % 51,90  0,00923  0,00759  OK   OK    OK / OK     26990  % 51,90
 
-
-8. Lzrw1Kh: Kurt Heanen's Lzrw1 implementation with internal RLE adaptation.  (in the following tests E89 active)
-
-  Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+MinMatch=5
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
 --------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
-NullCoder-NullM       XNull-Null                          11204798  211940083  % 47,13  2,24782  1,43591  OK   OK    OK / OK  16854728  % 42,51
-NullCoder-NullM       XNull-Null                          59540448  100000000  % 40,46  1,15812  0,75274  OK   OK    OK / OK  63501754  % 41,13
-NullCoder-NullM       XNull-Null                          26807121   58720195  % 54,35  0,56177  0,37249  OK   OK    OK / OK  43596477  % 56,37
-NullCoder-NullM       XNull-Null                           1690704    3143185  % 46,21  0,03879  0,02251  OK   OK    OK / OK   2108002  % 44,09
-NullCoder-NullM       XNull-Null                           3635414   15480545  % 76,52  0,15020  0,08012  OK   OK    OK / OK   9512353  % 76,03
-NullCoder-NullM       XNull-Null                            522180     768771  % 32,08  0,01302  0,00700  OK   OK    OK / OK    435043  % 31,84
-NullCoder-NullM       XNull-Null                             17895      44226  % 59,54  0,00161  0,00053  OK   OK    OK / OK     26990  % 59,54
+NullCoder-NullM       XNull-Null                          11731269  211940083  % 44,65  4,84345  2,35805  OK   OK    OK / OK  16854728  % 31,46
+NullCoder-NullM       XNull-Null                          72191213  100000000  % 27,81  2,07187  0,94606  OK   OK    OK / OK  63501754  % 24,09
+NullCoder-NullM       XNull-Null                          27873998   58720195  % 52,53  1,34955  0,71632  OK   OK    OK / OK  43596477  % 48,26
+NullCoder-NullM       XNull-Null                           2085681    3143185  % 33,64  0,06690  0,04118  OK   OK    OK / OK   2108002  % 27,85
+NullCoder-NullM       XNull-Null                           2557995   15480545  % 83,48  0,14636  0,08358  OK   OK    OK / OK   9512353  % 80,75
+NullCoder-NullM       XNull-Null                            699919     768771   % 8,96  0,02388  0,01454  OK   OK    OK / OK    435043   % 8,16
+NullCoder-NullM       XNull-Null                             21812      44226  % 50,68  0,00923  0,00834  OK   OK    OK / OK     26990  % 50,68
 
 
-10. LzpGT: Logic that used in Gerard Tamayo's Lzgpt7 applied here. It is a predictor. In low level functions returns two streams one for bits that represent prediction status, and one for unpredicted literals. Then you can compress them accordingly...  (in the following tests E89 active)
+10. BscLzp : Predictive Lz implementation used in PCompress and BscLibrary. Use nearly the same algorithm seen in GrZipIIlzp, except match comparisons are qword-based not bytes-base.
+    because of code used to speed up matches Minmatchlength must be >= 4. If MinMatch = 4 this code cause redundant if checks, if Minmatch > 4, it helps to detect false positives faster.
+
+MinMatch=4
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          11496087  211940083  % 45,76  3,98551  2,12574  OK   OK    OK / OK  16854728  % 32,39
+NullCoder-NullM       XNull-Null                          69644549  100000000  % 30,36  1,48373  0,86438  OK   OK    OK / OK  63501754  % 26,31
+NullCoder-NullM       XNull-Null                          27399511   58720195  % 53,34  1,14594  0,63707  OK   OK    OK / OK  43596477  % 48,89
+NullCoder-NullM       XNull-Null                           2020413    3143185  % 35,72  0,04542  0,03120  OK   OK    OK / OK   2108002  % 29,79
+NullCoder-NullM       XNull-Null                           2448557   15480545  % 84,18  0,11816  0,06386  OK   OK    OK / OK   9512353  % 81,35
+NullCoder-NullM       XNull-Null                            677216     768771  % 11,91  0,01411  0,00892  OK   OK    OK / OK    435043  % 10,86
+NullCoder-NullM       XNull-Null                             21272      44226  % 51,90  0,00416  0,00229  OK   OK    OK / OK     26990  % 51,90
+
+MinMatch=5
+Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          12592500  211940083  % 40,58  4,19039  2,21708  OK   OK    OK / OK  16854728  % 28,12
+NullCoder-NullM       XNull-Null                          79638220  100000000  % 20,36  1,58983  0,83689  OK   OK    OK / OK  63501754  % 18,04
+NullCoder-NullM       XNull-Null                          30698904   58720195  % 47,72  1,20530  0,63751  OK   OK    OK / OK  43596477  % 44,77
+NullCoder-NullM       XNull-Null                           2251791    3143185  % 28,36  0,04894  0,03017  OK   OK    OK / OK   2108002  % 23,11
+NullCoder-NullM       XNull-Null                           2629961   15480545  % 83,01  0,12187  0,06313  OK   OK    OK / OK   9512353  % 79,85
+NullCoder-NullM       XNull-Null                            743056     768771   % 3,34  0,01468  0,00861  OK   OK    OK / OK    435043   % 2,90
+NullCoder-NullM       XNull-Null                             24420      44226  % 44,78  0,00356  0,00288  OK   OK    OK / OK     26990  % 44,78
+
+
+11. LzpGT: Logic that used in Gerard Tamayo's Lzgpt7 applied here. It is a predictor. In low level functions returns two streams one for bits that represent prediction status, and one for unpredicted literals. Then you can compress them accordingly...  (in the following tests E89 active)
 
 Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
 --------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
@@ -165,7 +202,20 @@ NullCoder-NullM       XNull-Null                            523219     768771  %
 NullCoder-NullM       XNull-Null                             19728      44226  % 55,39  0,00808  0,00630  OK   OK    OK / OK     26990  % 55,39
 
 
-11. Shrinker: Very effective Lz variant.  (in the following tests E89 active)
+12. Lzrw1Kh: Kurt Heanen's Lzrw1 implementation with internal RLE adaptation.  (in the following tests E89 active)
+
+  Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
+--------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
+NullCoder-NullM       XNull-Null                          11204798  211940083  % 47,13  2,24782  1,43591  OK   OK    OK / OK  16854728  % 42,51
+NullCoder-NullM       XNull-Null                          59540448  100000000  % 40,46  1,15812  0,75274  OK   OK    OK / OK  63501754  % 41,13
+NullCoder-NullM       XNull-Null                          26807121   58720195  % 54,35  0,56177  0,37249  OK   OK    OK / OK  43596477  % 56,37
+NullCoder-NullM       XNull-Null                           1690704    3143185  % 46,21  0,03879  0,02251  OK   OK    OK / OK   2108002  % 44,09
+NullCoder-NullM       XNull-Null                           3635414   15480545  % 76,52  0,15020  0,08012  OK   OK    OK / OK   9512353  % 76,03
+NullCoder-NullM       XNull-Null                            522180     768771  % 32,08  0,01302  0,00700  OK   OK    OK / OK    435043  % 31,84
+NullCoder-NullM       XNull-Null                             17895      44226  % 59,54  0,00161  0,00053  OK   OK    OK / OK     26990  % 59,54
+
+
+13. Shrinker: Very effective Lz variant.  (in the following tests E89 active)
 
 Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
 --------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
@@ -177,19 +227,5 @@ NullCoder-NullM       XNull-Null                           2372221   15480545  %
 NullCoder-NullM       XNull-Null                            462350     768771  % 39,86  0,01286  0,00485  OK   OK    OK / OK    435043  % 39,26
 NullCoder-NullM       XNull-Null                             15397      44226  % 65,19  0,00284  0,00040  OK   OK    OK / OK     26990  % 65,19
 
-12. WFC : Weighted Frequency Count Transformation. It may give better compression ratios over MTF for some file types. (in the following tests E89 active)
-
-Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
---------------------  ----------------------------------  --------  ---------  -------  -------  -------  ---  ----  -------  --------  -------
-NullCoder-NullM       XNull-Null                          10000001  100000000   % 0,00  239,373  231,569  OK   OK    OK / OK  63501754  % -0,01
-NullCoder-NullM       XNull-Null                          58720212   58720195   % 0,00  141,723  138,317  OK   OK    OK / OK  43596477  % -0,01
-NullCoder-NullM       XNull-Null                           3143202    3143185   % 0,00  7,43302  7,19293  OK   OK    OK / OK   2108002  % -0,01
-NullCoder-NullM       XNull-Null                          15480562   15480545   % 0,00  36,7545  35,5187  OK   OK    OK / OK   9512353  % -0,01
-NullCoder-NullM       XNull-Null                            768788     768771   % 0,00  1,82123  1,75398  OK   OK    OK / OK    435043  % -0,01
-NullCoder-NullM       XNull-Null                             44243      44226  % -0,04  0,10541  0,10158  OK   OK    OK / OK     26990  % -0,04
-
-
-    
-14. 
 
     
