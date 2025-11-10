@@ -116,7 +116,7 @@ var WFC: array[0..255] of UInt32;
     i, j, k, HistoryIndex: Cardinal;
     OriginalByte: Byte;
    begin
-     // History buffer'ýný sýfýrla
+     // History buffer'Ã½nÃ½ sÃ½fÃ½rla
      FillChar(History[0], SizeOf(History), 0);
      HistoryIndex := 0;
      for i := 0 to 255 do
@@ -124,14 +124,14 @@ var WFC: array[0..255] of UInt32;
      for i := 0 to InSize - 1 do
      begin
        FillChar(WFC, SizeOf(WFC), 0);
-       // Geçmiþ buffer'ýndan frekans hesapla - BIT MASK ile!
+       // GeÃ§miÃ¾ buffer'Ã½ndan frekans hesapla - BIT MASK ile!
        j := HistoryIndex;
        for k := 1 to Min(i, Window) do
        begin
-         j := (integer(j) - 1) and WindowMask;  // j mod 1024 yerine j & 1023 - ÇOK DAHA HIZLI!
+         j := (integer(j) - 1) and WindowMask;  // j mod 1024 yerine j & 1023 - Ã‡OK DAHA HIZLI!
          WFC[History[j]] := WFC[History[j]] + Lookup[k];
        end;
-       // Tabloyu sýrala
+       // Tabloyu sÃ½rala
        for j := 0 to 255 do
        begin
          var Symbol := Table[j];
@@ -143,13 +143,13 @@ var WFC: array[0..255] of UInt32;
          end;
          Table[k] := Symbol;
        end;
-       // Orijinal byte'ý sakla ve kodla
+       // Orijinal byte'Ã½ sakla ve kodla
        OriginalByte := InData[i];
        j := 0;
        while Table[j] <> OriginalByte do
          Inc(j);
-       InData[i] := j;  // Kodlanmýþ deðeri yaz
-       // Geçmiþ buffer'ýný güncelle - BIT MASK ile!
+       InData[i] := j;  // KodlanmÃ½Ã¾ deÃ°eri yaz
+       // GeÃ§miÃ¾ buffer'Ã½nÃ½ gÃ¼ncelle - BIT MASK ile!
        History[HistoryIndex] := OriginalByte;
        HistoryIndex := (HistoryIndex + 1) and WindowMask;  // HistoryIndex mod 1024 yerine
      end;
@@ -169,13 +169,13 @@ procedure WFCDecode(const InData: PByte; const InSize: Cardinal);
      for i := 0 to InSize - 1 do
      begin
        FillChar(WFC, SizeOf(WFC), 0);
-       j := HistoryIndex; // Geçmiþ buffer'ýndan frekans hesapla - BIT MASK ile!
+       j := HistoryIndex; // GeÃ§miÃ¾ buffer'Ã½ndan frekans hesapla - BIT MASK ile!
        for k := 1 to Min(i, Window) do
        begin
          j := (integer(j) - 1) and WindowMask;  // j mod 1024 yerine j & 1023
          WFC[History[j]] := WFC[History[j]] + Lookup[k];
        end;
-       for j := 0 to 255 do // Tabloyu sýrala
+       for j := 0 to 255 do // Tabloyu sÃ½rala
        begin
          var Symbol := Table[j];
          k := j;
@@ -186,10 +186,10 @@ procedure WFCDecode(const InData: PByte; const InSize: Cardinal);
          end;
          Table[k] := Symbol;
        end;
-       // Byte'ý çöz
+       // Byte'Ã½ Ã§Ã¶z
        DecodedByte := Table[InData[i]];
        InData[i] := DecodedByte;
-       // Geçmiþ buffer'ýný güncelle - BIT MASK ile!
+       // GeÃ§miÃ¾ buffer'Ã½nÃ½ gÃ¼ncelle - BIT MASK ile!
        History[HistoryIndex] := DecodedByte;
        HistoryIndex := (HistoryIndex + 1) and WindowMask;
      end;
@@ -289,189 +289,6 @@ procedure WFCDecode2(Const InData: PByte; const InSize: Cardinal);
    end;
 
 
-{
-procedure WFCEncode2(Const InData: PByte; const InSize: Cardinal);
-var WFC: array[0..255] of UInt32;
-    Table: array[0..255] of Byte;
-    Output: PByte;
-    i, j, k: Cardinal;
-   begin
-     GetMem(Output, InSize);
-     try
-       for i := 0 to 255 do
-         Table[i] := i;
-       for i := 0 to InSize - 1 do
-       begin
-         FillChar(WFC, SizeOf(WFC), 0);
-         j := i;
-         while (i - j < Window) and (j > 0) do
-         begin
-           Dec(j);
-           WFC[InData[j]] := WFC[InData[j]] + Lookup[i - j];
-         end;
-         for j := 0 to 255 do
-         begin
-           var Symbol := Table[j];
-           k := j;
-           while (k > 0) and (WFC[Symbol] > WFC[Table[k-1]]) do
-           begin
-             Table[k] := Table[k-1];
-             Dec(k);
-           end;
-           Table[k] := Symbol;
-         end;
-
-         j := 0;
-         while Table[j] <> InData[i] do
-           Inc(j);
-         Output[i] := j;
-       end;
-     finally
-       Move(OutPut^, InData^, InSize);
-       FreeMem(Output, InSize);
-     end;
-   end;
-
-procedure WfcDecode2(const InData: PByte; Const InSize: Cardinal);
-   var WFC: array[0..255] of UInt32;
-       Table: array[0..255] of Byte;
-       Output: PByte;
-       i, j, k: Cardinal;
-   begin
-     GetMem(Output, InSize);
-     try
-       for i := 0 to 255 do
-         Table[i] := i;
-       for i := 0 to InSize - 1 do
-       begin
-         FillChar(WFC, SizeOf(WFC), 0);
-         j := i;
-         while (i - j < Window) and (j > 0) do
-         begin
-           Dec(j);
-           WFC[Output[j]] := WFC[Output[j]] + Lookup[i - j];
-         end;
-         for j := 0 to 255 do
-         begin
-           var Symbol := Table[j];
-           k := j;
-           while (k > 0) and (WFC[Symbol] > WFC[Table[k-1]]) do
-           begin
-             Table[k] := Table[k-1];
-             Dec(k);
-           end;
-           Table[k] := Symbol;
-         end;
-         Output[i] := Table[InData[i]];
-       end;
-     finally
-       Move(OutPut^, InData^, InSize);
-       FreeMem(Output, InSize);
-     end;
-   end;
-}
-
-
-{
-procedure WFCEncode(const InData: PByte; InSize: Cardinal; out OutData: PByte; out OutSize: Cardinal);
-var
-  Table: array[0..255] of Byte;
-  Output: PByte;
-  i, j, k: Cardinal;
-  WFC: array[0..255] of UInt64;
-begin
-  GetMem(Output, InSize);
-  if Output = nil then
-    raise Exception.Create('Memory allocation failed');
-
-  for i := 0 to 255 do
-    Table[i] := i;
-
-  for i := 0 to InSize - 1 do
-  begin
-    FillChar(WFC, SizeOf(WFC), 0);
-
-    j := i;
-    while (i - j < Window) and (j > 0) do
-    begin
-      Dec(j);
-      WFC[InData[j]] := WFC[InData[j]] + Lookup[i - j];
-    end;
-
-    for j := 0 to 255 do
-    begin
-      var Symbol := Table[j];
-      k := j;
-      while (k > 0) and (WFC[Symbol] > WFC[Table[k-1]]) do
-      begin
-        Table[k] := Table[k-1];
-        Dec(k);
-      end;
-      Table[k] := Symbol;
-    end;
-
-    j := 0;
-    while Table[j] <> InData[i] do
-      Inc(j);
-
-    Output[i] := j;
-
-    if (i mod 65536) = 0 then
-      WriteLn(Format('WFC %.2f%%', [100 * i / InSize]));
-  end;
-
-  WriteLn;
-  OutData := Output;
-  OutSize := InSize;
-end;
-
-procedure WfcDecode(const InData: PByte; InSize: Cardinal; out OutData: PByte; out OutSize: Cardinal);
-var
-  Table: array[0..255] of Byte;
-  Output: PByte;
-  i, j, k: Cardinal;
-  WFC: array[0..255] of UInt64;
-begin
-  GetMem(Output, InSize);
-  if Output = nil then
-    raise Exception.Create('Memory allocation failed');
-
-  for i := 0 to 255 do
-    Table[i] := i;
-
-  for i := 0 to InSize - 1 do
-  begin
-    FillChar(WFC, SizeOf(WFC), 0);
-
-    j := i;
-    while (i - j < Window) and (j > 0) do
-    begin
-      Dec(j);
-      WFC[Output[j]] := WFC[Output[j]] + Lookup[i - j];
-    end;
-
-    for j := 0 to 255 do
-    begin
-      var Symbol := Table[j];
-      k := j;
-      while (k > 0) and (WFC[Symbol] > WFC[Table[k-1]]) do
-      begin
-        Table[k] := Table[k-1];
-        Dec(k);
-      end;
-      Table[k] := Symbol;
-    end;
-
-    Output[i] := Table[InData[i]];
-
-    if (i mod 65536) = 0 then
-      WriteLn(Format('WFC %.2f%%', [100 * i / InSize]));
-  end;
-
-  WriteLn;
-  OutData := Output;
-  OutSize := InSize;
-end;
-}
 
 end.
+
