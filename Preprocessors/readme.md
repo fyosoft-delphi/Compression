@@ -19,7 +19,7 @@ NullCoder-NullM       XNull-Null                             44252      44226  %
 
 
       b. czBWT : a fast but partial sorting algorithm. (in the following tests E89 active)
-Default BlockSize = 0 selected for non-binary files. That means file is  encode as a single block.
+Default BlockSize = 0 selected for non-binary files. That means file is encoded as a single block.
 This complicates the search algorithm and slows down the process.
 For binary files 64-512K-1MB choosen automatically by file size.
 In general, for binary files 512K blocksize is best. For huge text files 16 MB block size is enough.
