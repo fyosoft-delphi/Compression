@@ -293,8 +293,8 @@ procedure ST4Decode(const Input: PByte; Size: Cardinal; FBP: Integer);
      Sum := 0;
      for i := 0 to ST_MAXWORD - 1 do
      begin
-       CStart := Sum;              // önceki birikmiþ toplam
-       Sum := Sum + Context2[i];   // bu baðlamýn frekans miktarý
+       CStart := Sum;              // Ã¶nceki birikmiÃ¾ toplam
+       Sum := Sum + Context2[i];   // bu baÃ°lamÃ½n frekans miktarÃ½
        while j < Sum do
        begin
          c := Input[j];
