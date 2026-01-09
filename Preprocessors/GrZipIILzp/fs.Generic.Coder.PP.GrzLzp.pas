@@ -24,6 +24,11 @@ const
 //   selftest procedure are added.
 // 2025.10.24 Stream based encoding procedure converted to functions. Returning
 //   false as a result means source is not compressible and just left as is.
+// 2025.11.09 First upload to Github account
+// 2025.12.04 PByte based decode function returns invalid size. Hence, original
+//   size used in DecodeS function to correct it temporarily.
+//
+// TO DO: PByte based decode must return correct decoded stream size.
 //==============================================================================
 
 function GRZip_LzpEncode(Input: PByte; Size: Cardinal; Output: PByte; Mode: Byte): TGRZipResult;
@@ -91,7 +96,7 @@ function GrzLzpEncode(Input: PByte; Size: Cardinal; Output: PByte; HashBitSize: 
            if CommonLength < LZP_MinMatchLen then
              CommonLength := 0;
            if CommonLength > 0 then
-           begin // MAtch found : encode it
+           begin // Match found : encode it
              Inc(Input, CommonLength);
              Ctx := (Input[-1] + (Input[-2] shl 8) + (Input[-3] shl 16) + (Input[-4] shl 24));
              CommonLength := CommonLength - LZP_MinMatchLen + 1;
@@ -164,7 +169,7 @@ function GrzLzpDecode(Input: PByte; Size: Cardinal; Output: PByte; HashBitSize: 
        Ctx := (Input[3] + (Input[2] shl 8) + (Input[1] shl 16) + (Input[0] shl 24));
        Inc(Input, 4);
        Inc(Output, 4);
-       while Input < InputEnd do
+       while (Input < InputEnd) do
        begin
          HashIndex := ((Ctx shr 15) xor Ctx xor (Ctx shr 3)) and LZP_HT_Size;
          LastPtr := Contexts[HashIndex];
@@ -192,7 +197,7 @@ function GrzLzpDecode(Input: PByte; Size: Cardinal; Output: PByte; HashBitSize: 
              if CommonLength > 0 then
              begin
                CommonLength := CommonLength + LZP_MinMatchLen - 1;
-               for var i := 1 to CommonLength do // Byte'larý kopyala
+               for var i := 1 to CommonLength do // Byte'ları kopyala
                begin
                  Output^ := LastPtr^;
                  Inc(Output);
@@ -255,12 +260,13 @@ Function GrzLzpEncode(ASource : TMemoryStream; HashBitSize: byte; MinMatchLen: B
 
 Procedure GrzLzpDecode(ASource : TMemoryStream; OriSize : Cardinal; HashBitSize: byte; MinMatchLen: Byte);
  var Temp : TMemoryStream;
+     ASize : UInt32;
    begin
      Temp := TMemoryStream.Create;
      try
        Temp.Size := OriSize;
-       Temp.Size := GrzLzpDecode(ASource.Memory, ASource.Size, Temp.Memory, HashBitSize, MinMatchLen);
-       ASource.Size := Temp.Size;
+       ASize := GrzLzpDecode(ASource.Memory, ASource.Size, Temp.Memory, HashBitSize, MinMatchLen);
+       ASource.Size := OriSize;
        Move(Temp.Memory^, ASource.Memory^, ASource.Size);
      finally
        Temp.Free;
@@ -280,12 +286,17 @@ Function GrzLzpEncodeS(ASource : TMemoryStream; HashBitSize: byte; MinMatchLen: 
        begin
          Temp.Size := ANewSize;
          AOriginalSize := ASource.Size;
-         ASource.Position := 0;
+         ASource.Size := 0;
          ASource.Write(AOriginalSize, sizeof(AOriginalSize));
          ASource.Write(HashBitSize, sizeof(HashBitSize));
          ASource.Write(MinMatchLen, sizeof(MinMatchLen));
-         ASource.Size := Temp.Size + ASource.Position;
-         Move(Temp.Memory^, (PByte(ASource.Memory) + ASource.Position)^, Temp.Size);
+         ASource.WriteBuffer(Temp.Memory^, Temp.Size);
+//         ASource.Position := 0;
+//         ASource.Write(AOriginalSize, sizeof(AOriginalSize));
+//         ASource.Write(HashBitSize, sizeof(HashBitSize));
+//         ASource.Write(MinMatchLen, sizeof(MinMatchLen));
+//         ASource.Size := Temp.Size + ASource.Position;
+//         Move(Temp.Memory^, (PByte(ASource.Memory) + ASource.Position)^, Temp.Size);
          ASource.Position := 0; // restore position after write operations
          Result := true;
        end
@@ -297,7 +308,7 @@ Function GrzLzpEncodeS(ASource : TMemoryStream; HashBitSize: byte; MinMatchLen: 
 
 Procedure GrzLzpDecodeS(ASource : TMemoryStream);
  var Temp : TMemoryStream;
-     AOriginalSize : Cardinal; // NativeInt;
+     AOriginalSize, ASize : Cardinal; // NativeInt;
      HashBitSize, MinMatchLen : byte;
    begin
      Temp := TMemoryStream.Create;
@@ -306,9 +317,10 @@ Procedure GrzLzpDecodeS(ASource : TMemoryStream);
        ASource.Read(AOriginalSize, sizeof(AOriginalSize));
        ASource.Read(HashBitSize, sizeof(HashBitSize));
        ASource.Read(MinMatchLen, sizeof(MinMatchLen));
-       Temp.Size := AOriginalSize;
-       Temp.Size := GrzLzpDecode(PByte(ASource.Memory)+ASource.Position, ASource.Size-ASource.Position, Temp.Memory, HashBitSize, MinMatchLen);
-       ASource.Size := Temp.Size;
+       Temp.Size := AOriginalSize + 4069;
+       ASize := GrzLzpDecode(PByte(ASource.Memory)+ASource.Position, ASource.Size-ASource.Position, Temp.Memory, HashBitSize, MinMatchLen);
+       assert(ASize = AOriginalSize, 'GrzLzp: Decoded stream size mismatch.');
+       ASource.Size := AOriginalSize; // Temp.Size;
        Move(Temp.Memory^, ASource.Memory^, ASource.Size);
        ASource.Position := 0; // restore position after read operations
      finally
