@@ -231,6 +231,7 @@ NullCoder-NullM       XNull-Null                             15397      44226  %
 13. ST4: Very effective and fast partial sorting algorithm. It can be used instead of BWT. There is another partial sort algorithm previously described named czBWT which uses three chars to sort with unlimited block size. This algortihm has 8MB blocksize limit, it is faster and gives better results. It is extracted and converted from original source code taken from the link: https://compressionratings.com/files/grzip-0.7.3.zip (st4.inc).
 
 
-14. 
+14. IFT: It is meant to be simple Inversion (or Inversion Ranks) Coder written from the stratch. I heard it for the very first time in the description of BWIC (Burrows-Wheeler with Inversion Coder) written by Prof. Ziya Arnavut. He said sometimes IC is better than MTF, and I wanted to test it. I asked to chatgpt and deepseek about the algorithm (they are both somewhat confused). Taken clues and some insight resulted in this algorithm. After comparing MTF and IFT (this one) it can be seen that IFT is a modified version of MTF. I still do not know whether it is a true IC coder or not (probably not but naming not changed). I prefer to use the name Inversion Frequency Transform (IFT). But it has better speed and ratio over MTF.
+ 
 15. 
   
