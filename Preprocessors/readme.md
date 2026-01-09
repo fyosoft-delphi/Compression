@@ -164,7 +164,7 @@ NullCoder-NullM       XNull-Null                             21812      44226  %
 
 
 10. BscLzp : Predictive Lz implementation used in PCompress and BscLibrary. Use nearly the same algorithm seen in GrZipIIlzp, except match comparisons are qword-based not bytes-base.
-    because of code used to speed up matches Minmatchlength must be >= 4. If MinMatch = 4 this code cause redundant if checks, if Minmatch > 4, it helps to detect false positives faster.
+    because of code used to speed up matches, Minmatchlength must be >= 4. If MinMatch = 4 this code cause redundant if checks, if Minmatch > 4, it helps to detect false positives faster.
 
 MinMatch=4
 Algorithm             Level                               Zip Size   Ori Size  C. Rate  ZipTime  UnZTime  CRC  BYTE  FLAGS    Expected  P. Rate
@@ -228,4 +228,9 @@ NullCoder-NullM       XNull-Null                            462350     768771  %
 NullCoder-NullM       XNull-Null                             15397      44226  % 65,19  0,00284  0,00040  OK   OK    OK / OK     26990  % 65,19
 
 
-    
+13. ST4: Very effective and fast partial sorting algorithm. It can be used instead of BWT. There is another partial sort algorithm previously described named czBWT which uses three chars to sort with unlimited block size. This algortihm has 8MB blocksize limit, it is faster and gives better results. It is extracted and converted from original source code taken from the link: https://compressionratings.com/files/grzip-0.7.3.zip (st4.inc).
+
+
+14. 
+15. 
+  
